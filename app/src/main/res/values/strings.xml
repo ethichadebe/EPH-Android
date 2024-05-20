@@ -2,6 +2,6 @@
     <string name="app_name">EP-Hotspot</string>
     <string name="remaining_time">Remaining Time</string>
     <string name="last_updated">Last updated:</string>
-    <string name="see_offers_below_to_stay_nconnected">See offers below to stay\nconnected</string>
+    <string name="see_offers_below_to_stay_nconnected">See WIFI offers below</string>
     <string name="r">R</string>
 </resources>
