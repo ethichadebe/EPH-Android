@@ -16,9 +16,9 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
             android:layout_marginStart="30dp"
             android:layout_marginTop="30dp"
-            android:layout_centerHorizontal="true"
             android:layout_marginEnd="30dp"
             android:layout_marginBottom="30dp"
             android:contentDescription="TODO"
@@ -45,33 +45,38 @@
             android:textColor="@color/black"
             android:textSize="16sp" />
 
-        <TextView
-            android:id="@+id/tvPassword"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/llToken"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvRT"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="10dp"
-            android:fontFamily="@font/archivo_black"
-            android:text=""
-            android:textColor="#54b062"
-            android:textSize="32sp" />
-        <TextView
-            android:id="@+id/tvCopy"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_below="@+id/tvRT"
-            android:visibility="gone"
-            android:layout_toEndOf="@id/tvPassword"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/baseline_copy_all_24" />
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvPassword"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="8dp"
+                android:fontFamily="@font/archivo_black"
+                android:text=""
+                android:textColor="#54b062"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tvCopy"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="10dp"
+                android:background="@drawable/baseline_copy_all_24"
+                android:visibility="gone" />
+        </LinearLayout>
 
         <TextView
             android:id="@+id/tvRT2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/tvPassword"
+            android:layout_below="@+id/llToken"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="30dp"
             android:fontFamily="@font/archivo_black"
@@ -100,8 +105,8 @@
 
                 <ImageView
                     android:id="@+id/ivWifi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:contentDescription="TODO"
@@ -135,9 +140,9 @@
                     android:id="@+id/tv5D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@+id/tv5"
@@ -170,8 +175,8 @@
 
                 <ImageView
                     android:id="@+id/ivWifi1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:contentDescription="TODO"
@@ -205,12 +210,12 @@
                     android:id="@+id/tv10D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@+id/tv10"
-                    android:layout_alignParentEnd="true"
                     android:fontFamily="@font/archivo_black"
                     android:gravity="center"
                     android:text="1 hour WIFI access"
@@ -240,8 +245,8 @@
 
                 <ImageView
                     android:id="@+id/ivWifi2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:contentDescription="TODO"
@@ -275,11 +280,11 @@
                     android:id="@+id/tv15D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_toEndOf="@+id/tv15"
                     android:fontFamily="@font/archivo_black"
                     android:gravity="center"
@@ -310,8 +315,8 @@
 
                 <ImageView
                     android:id="@+id/ivWifi3"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:contentDescription="TODO"
@@ -345,10 +350,10 @@
                     android:id="@+id/tv20D"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:layout_alignParentEnd="true"
                     android:layout_marginBottom="10dp"
                     android:layout_toEndOf="@+id/tv20"
                     android:fontFamily="@font/archivo_black"
@@ -360,6 +365,32 @@
             </RelativeLayout>
         </androidx.cardview.widget.CardView>
 
+        <LinearLayout
+            android:id="@+id/llWhatsapp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/cvR20"
+            android:layout_alignParentBottom="true"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tvWhatsapp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/archivo_black"
+                android:gravity="center"
+                android:text="@string/need_help_contact_us"
+                android:textColorLink="#54b062"
+                android:textSize="16sp" />
+
+            <ImageView
+                android:id="@+id/ivWhatsapp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:contentDescription="@string/whatsapp_logo"
+                android:src="@drawable/whatsapp" />
+        </LinearLayout>
     </RelativeLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -503,10 +534,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/vHLine1"
+                android:layout_alignParentEnd="true"
                 android:layout_marginTop="15dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="15dp"
-                android:layout_alignParentEnd="true"
                 android:fontFamily="@font/poppins_light"
                 android:text="+0"
                 android:textColor="#7C7C7C"

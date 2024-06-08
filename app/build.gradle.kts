@@ -3,15 +3,15 @@ plugins {
 }
 
 android {
-    namespace = "com.eph.ep_hotspot"
+    namespace = "com.eph.ephotspot"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.eph.ep_hotspot"
+        applicationId = "com.eph.ephotspot"
         minSdk = 27
         targetSdk = 34
-        versionCode = 16
-        versionName = "1.0.6"
+        versionCode = 20
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
