@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior behavior;
     private View bottomSheet;
-    private String[] passwords = {
+    String[] passwords = {
             "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644", "EPN842792838",
             "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566", "EPN477967961", "EPN613878129",
             "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746", "EPN454412098", "EPN536750292", "EPN585862119",
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout rlR5, rlR10, rlR15, rlR20;
 
-    private TextView tvPassword, tvCopy, tvWhatsapp;
+    TextView tvPassword, tvCopy, tvWhatsapp;
     private MutableLiveData<Boolean> isBillingClientConnected;
     private IapConnector iapConnector;
 
@@ -79,6 +79,7 @@ public class MainActivity extends AppCompatActivity {
         tvPassword.setText(getSavedPassword());
 
         tvWhatsapp.setMovementMethod(LinkMovementMethod.getInstance());
+
         tvCopy.setOnClickListener(v -> {
             if (!tvPassword.getText().toString().isEmpty()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         });
+
         cvTap.setOnClickListener(v -> {
             String strPassword = passwords[randomToken(passwords.length - 1)];
             tvPassword.setText(strPassword);
@@ -127,7 +129,6 @@ public class MainActivity extends AppCompatActivity {
         List<String> consumableList = Arrays.asList("r5", "r10", "r15", "r20");
         List<String> subsList = Collections.singletonList("subscription");
 
-        //Toast.makeText(MainActivity.this, getMacAddr(), Toast.LENGTH_SHORT).show();
         iapConnector = new IapConnector(this, nonConsumableList, consumableList, subsList,
                 "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLAMA9UFcUfb083QzTMBtLuL9zwYZTypVNZ6kv6WNGJhs0qeIQYzlFw5Tgf62SyAgZNFhXnmiUHMTMQNMU2a7DROsWJJEqkehqbFxrmYp4x4t4/yEFMjT193YR4mdJ0ncEp2cg+2YknrWl9ZoHwv5zPfYaU95Bv5Vlgu/7cmzUOi+er9HzsccUyKi3PDHJRLp6pQAbskPmrYCR+xutbmrmECoc5/T1JOrCkbRMtgSAop5wXqdP8N6gjkaELcOOd5eN5S5IS7Wt6FE1xq3EGJu22Ibo3Iwk1fexl7Gj+MqwRoNkR+oG2q/r5vHYqcmvWubXxpWMEbtwiTfFV0PIAb9QIDAQAB",
                 true);
@@ -145,16 +146,21 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProductPurchased(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
-                if (purchaseInfo.getSku().equals("r5")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R5 package\n" + getMacAddr(), Toast.LENGTH_SHORT).show();
-                    tvPassword.setText(passwords[1]);
-                } else if (purchaseInfo.getSku().equals("r10")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().equals("r15")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R15 package", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().equals("r20")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
+                switch (purchaseInfo.getSku()) {
+                    case "r5":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R5 package\n" + getMacAddr(), Toast.LENGTH_SHORT).show();
+                        break;
+                    case "r10":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "r15":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R15 package", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "r20":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
+                        break;
                 }
+                tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
             }
 
             @Override
@@ -170,39 +176,34 @@ public class MainActivity extends AppCompatActivity {
 
 
         rlR5.setOnClickListener(v -> {
-            //iapConnector.purchase(this, "r5", "", "");
-            //tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-
+            iapConnector.purchase(this, "r5", "", "");
+            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR10.setOnClickListener(v -> {
-            //   iapConnector.purchase(this, "r10", "", "");
-            //tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            iapConnector.purchase(this, "r10", "", "");
+            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR15.setOnClickListener(v -> {
-            //  iapConnector.purchase(this, "r15", "", "");
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
-            //tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
+            iapConnector.purchase(this, "r15", "", "");
+            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR20.setOnClickListener(v -> {
-            //iapConnector.purchase(this, "r20", "", "");
-            //tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
-            behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
+            iapConnector.purchase(this, "r20", "", "");
+            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
     }
 
-    private String getMacAddr() {
+    String getMacAddr() {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wInfo = wifiManager.getConnectionInfo();
         String macAddress = wInfo.getMacAddress();
         return "MAC Address : " + macAddress;
     }
 
-    private int randomToken(int limit) {
+    int randomToken(int limit) {
         // create instance of Random class
         Random rand = new Random();
 
