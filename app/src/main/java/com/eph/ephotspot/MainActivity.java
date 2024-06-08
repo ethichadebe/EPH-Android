@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
 
     private BottomSheetBehavior behavior;
     private View bottomSheet;
-    private String[] passwords = {
+    final String[] passwords = {
             "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644", "EPN842792838",
             "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566", "EPN477967961", "EPN613878129",
             "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746", "EPN454412098", "EPN536750292", "EPN585862119",
@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout rlR5, rlR10, rlR15, rlR20;
 
-    private TextView tvPassword, tvCopy, tvWhatsapp;
+    TextView tvPassword, tvCopy, tvWhatsapp;
     private MutableLiveData<Boolean> isBillingClientConnected;
     private IapConnector iapConnector;
 
@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(MainActivity.this, "Password copied", Toast.LENGTH_SHORT).show();
                 clipboard.setPrimaryClip(clip);
             }
-
         });
+
         cvTap.setOnClickListener(v -> {
             String strPassword = passwords[randomToken(passwords.length - 1)];
             tvPassword.setText(strPassword);
@@ -103,7 +103,7 @@ public class MainActivity extends AppCompatActivity {
 
             // Once the changes have been made, we need to commit to apply those changes made,
             // otherwise, it will throw an error
-            myEdit.commit();
+            myEdit.apply();
 
             behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
         });
@@ -145,15 +145,21 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProductPurchased(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
-                if (purchaseInfo.getSku().equals("r5")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R5 package\n" + getMacAddr(), Toast.LENGTH_SHORT).show();
-                    tvPassword.setText(passwords[1]);
-                } else if (purchaseInfo.getSku().equals("r10")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().equals("r15")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R15 package", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().equals("r20")) {
-                    Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
+                switch (purchaseInfo.getSku()) {
+                    case "r5":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R5 package\n" + getMacAddr(),
+                                Toast.LENGTH_SHORT).show();
+                        tvPassword.setText(passwords[1]);
+                        break;
+                    case "r10":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "r15":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R15 package", Toast.LENGTH_SHORT).show();
+                        break;
+                    case "r20":
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
+                        break;
                 }
             }
 
@@ -195,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private String getMacAddr() {
+    String getMacAddr() {
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         WifiInfo wInfo = wifiManager.getConnectionInfo();
         String macAddress = wInfo.getMacAddress();
