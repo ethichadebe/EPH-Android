@@ -146,9 +146,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onProductPurchased(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
+                Toast.makeText(MainActivity.this, purchaseInfo.getSku(), Toast.LENGTH_SHORT).show();
+
                 switch (purchaseInfo.getSku()) {
                     case "r5":
-                        Toast.makeText(MainActivity.this, "Thank you for buying the R5 package\n" + getMacAddr(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "Thank you for buying the R5 package", Toast.LENGTH_SHORT).show();
                         break;
                     case "r10":
                         Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
