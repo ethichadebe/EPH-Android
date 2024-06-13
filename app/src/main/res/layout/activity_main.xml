@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -7,657 +7,385 @@
     app:cardCornerRadius="20dp"
     app:cardElevation="5dp">
 
-    <RelativeLayout
+    <ImageView
+        android:id="@+id/ivWifiGreen"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="30dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/ep_naledi" />
+
+    <!--<ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="30dp"
+        android:contentDescription="TODO"
+        android:src="@drawable/profile" />-->
+
+    <TextView
+        android:id="@+id/tvRT"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivWifiGreen"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/archivo_black"
+        android:text="Your WIFI password is:"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:id="@+id/llToken"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/ivWifiGreen"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="30dp"
-            android:contentDescription="TODO"
-            android:src="@drawable/ep_naledi" />
-
-        <!--<ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"
-            android:contentDescription="TODO"
-            android:src="@drawable/profile" />-->
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRT"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvRT"
+            android:id="@+id/tvPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/ivWifiGreen"
             android:layout_marginStart="30dp"
+            android:layout_marginTop="8dp"
             android:fontFamily="@font/archivo_black"
-            android:text="Your WIFI password is:"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
+            android:text=""
+            android:textColor="#54b062"
+            android:textSize="32sp" />
 
-        <LinearLayout
-            android:id="@+id/llToken"
+        <TextView
+            android:id="@+id/tvCopy"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginStart="10dp"
+            android:background="@drawable/baseline_copy_all_24"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/tvRT2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/llToken"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/archivo_black"
+        android:gravity="center"
+        android:text="@string/see_offers_below_to_stay_nconnected"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvR5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvRT2"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="#54b062"
+        app:cardCornerRadius="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rlR5"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRT"
-            android:orientation="horizontal">
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivWifi"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/wifi" />
 
             <TextView
-                android:id="@+id/tvPassword"
+                android:id="@+id/tvR5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="8dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivWifi"
                 android:fontFamily="@font/archivo_black"
-                android:text=""
-                android:textColor="#54b062"
+                android:text="@string/r"
+                android:textColor="@color/white"
                 android:textSize="32sp" />
 
             <TextView
-                android:id="@+id/tvCopy"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/baseline_copy_all_24"
-                android:visibility="gone" />
-        </LinearLayout>
-
-        <TextView
-            android:id="@+id/tvRT2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/llToken"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="30dp"
-            android:fontFamily="@font/archivo_black"
-            android:gravity="center"
-            android:text="@string/see_offers_below_to_stay_nconnected"
-            android:textColor="@color/black"
-            android:textSize="16sp" />
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvR5"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvRT2"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="15dp"
-            app:cardBackgroundColor="#54b062"
-            app:cardCornerRadius="20dp">
-
-            <RelativeLayout
-                android:id="@+id/rlR5"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-
-                <ImageView
-                    android:id="@+id/ivWifi"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/wifi" />
-
-                <TextView
-                    android:id="@+id/tvR5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/ivWifi"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="@string/r"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv5"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/tvR5"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv5D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tv5"
-                    android:fontFamily="@font/archivo_black"
-                    android:gravity="center"
-                    android:text="30 Minutes WIFI access"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvR10"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvR5"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="15dp"
-            app:cardBackgroundColor="#54b062"
-            app:cardCornerRadius="20dp">
-
-            <RelativeLayout
-                android:id="@+id/rlR10"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-
-                <ImageView
-                    android:id="@+id/ivWifi1"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/wifi" />
-
-                <TextView
-                    android:id="@+id/tvR10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/ivWifi1"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="@string/r"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv10"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/tvR10"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv10D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tv10"
-                    android:fontFamily="@font/archivo_black"
-                    android:gravity="center"
-                    android:text="1 hour WIFI access"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvR15"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvR10"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="15dp"
-            app:cardBackgroundColor="#54b062"
-            app:cardCornerRadius="20dp">
-
-            <RelativeLayout
-                android:id="@+id/rlR15"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-
-                <ImageView
-                    android:id="@+id/ivWifi2"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/wifi" />
-
-                <TextView
-                    android:id="@+id/tvR15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/ivWifi2"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="@string/r"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv15"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/tvR15"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv15D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tv15"
-                    android:fontFamily="@font/archivo_black"
-                    android:gravity="center"
-                    android:text="2 hour WIFI access"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:id="@+id/cvR20"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvR15"
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="15dp"
-            android:layout_marginEnd="30dp"
-            android:layout_marginBottom="15dp"
-            app:cardBackgroundColor="#54b062"
-            app:cardCornerRadius="20dp">
-
-            <RelativeLayout
-                android:id="@+id/rlR20"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="10dp">
-
-                <ImageView
-                    android:id="@+id/ivWifi3"
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/wifi" />
-
-                <TextView
-                    android:id="@+id/tvR20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_toEndOf="@+id/ivWifi3"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="@string/r"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv20"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="10dp"
-                    android:layout_toEndOf="@+id/tvR20"
-                    android:fontFamily="@font/archivo_black"
-                    android:text="0"
-                    android:textColor="@color/white"
-                    android:textSize="32sp" />
-
-                <TextView
-                    android:id="@+id/tv20D"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
-                    android:layout_marginBottom="10dp"
-                    android:layout_toEndOf="@+id/tv20"
-                    android:fontFamily="@font/archivo_black"
-                    android:gravity="center"
-                    android:text="3 hour WIFI access"
-                    android:textColor="@color/white"
-                    android:textSize="18sp" />
-
-            </RelativeLayout>
-        </androidx.cardview.widget.CardView>
-
-        <LinearLayout
-            android:id="@+id/llWhatsapp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/cvR20"
-            android:layout_alignParentBottom="true"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/tvWhatsapp"
+                android:id="@+id/tv5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvR5"
+                android:fontFamily="@font/archivo_black"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv5D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv5"
                 android:fontFamily="@font/archivo_black"
                 android:gravity="center"
-                android:text="@string/need_help_contact_us"
-                android:textColorLink="#54b062"
-                android:textSize="16sp" />
-
-            <ImageView
-                android:id="@+id/ivWhatsapp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:contentDescription="@string/whatsapp_logo"
-                android:src="@drawable/whatsapp" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/nsvGoogleBilling"
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:layout_alignParentBottom="true"
-        android:elevation="2dp"
-        app:layout_behavior="@string/bottom_sheet_behavior">
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/white">
-
-            <TextView
-                android:id="@+id/tvGooglePlay"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginEnd="12dp"
-                android:layout_marginBottom="12dp"
-                android:text="Google Play"
-                android:textColor="#B3B3B3"
-                android:textSize="20sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/vHLine"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/tvGooglePlay"
-                android:background="#7C7C7C" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvLogo"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_below="@+id/vHLine"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="@color/white"
-                android:elevation="5dp"
-                app:cardCornerRadius="5dp">
-
-                <ImageView
-                    android:id="@+id/ivWifiLogo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentStart="true"
-                    android:layout_gravity="center"
-                    android:contentDescription="TODO"
-                    android:src="@drawable/ep_naledi" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/tvTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toEndOf="@+id/cvLogo"
-                android:fontFamily="@font/poppins_regular"
-                android:text="30 minutes wifi\nconnection"
-                android:textColor="@color/black"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvPrice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine"
-                android:layout_alignParentEnd="true"
-                android:layout_marginStart="15dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="15dp"
-                android:layout_toEndOf="@+id/tvTitle"
-                android:fontFamily="@font/poppins_regular"
-                android:gravity="end"
-                android:text="R 0.00"
-                android:textColor="#000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvSubTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/tvTitle"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:layout_toEndOf="@+id/cvLogo"
-                android:fontFamily="@font/poppins_light"
-                android:text="Naledi wifi"
-                android:textColor="#7C7C7C"
-                android:textSize="14sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/vHLine1"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/tvSubTitle"
-                android:background="#7C7C7C" />
-
-            <TextView
-                android:id="@+id/tvPlayPoint"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine1"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="Play Points ~ Bronze"
-                android:textColor="#7C7C7C"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/ivPlayPoints"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                android:layout_below="@+id/vHLine1"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="15dp"
-                android:layout_toStartOf="@+id/tvPlayPoints"
-                android:src="@drawable/google_play_points" />
-
-            <TextView
-                android:id="@+id/tvPlayPoints"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine1"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginBottom="15dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="+0"
-                android:textColor="#7C7C7C"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <View
-                android:id="@+id/vHLine2"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/tvPlayPoint"
-                android:background="#7C7C7C" />
-
-            <LinearLayout
-                android:id="@+id/llTelkom"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine2"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <androidx.cardview.widget.CardView
-                    android:id="@+id/cvNetwork"
-                    android:layout_width="0dp"
-                    android:layout_height="50dp"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_weight="2"
-                    android:backgroundTint="@color/white"
-                    android:elevation="5dp"
-                    app:cardCornerRadius="5dp">
-
-                    <ImageView
-                        android:id="@+id/ivTelkom"
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
-                        android:layout_alignParentStart="true"
-                        android:layout_gravity="center"
-                        android:contentDescription="TODO"
-                        android:src="@drawable/baseline_phone_iphone_24" />
-                </androidx.cardview.widget.CardView>
-
-                <TextView
-                    android:id="@+id/tvNetwork"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="20dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:layout_weight="7"
-                    android:fontFamily="@font/poppins_light"
-                    android:text="Telkom"
-                    android:textColor="@color/black"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivForwardArrow"
-                    android:layout_width="0dp"
-                    android:layout_height="20dp"
-                    android:layout_weight="1"
-                    android:src="@drawable/baseline_arrow_forward_ios_24" />
-
-            </LinearLayout>
-
-            <View
-                android:id="@+id/vHLine3"
-                android:layout_width="match_parent"
-                android:layout_height="2dp"
-                android:layout_below="@id/llTelkom"
-                android:layout_marginBottom="20dp"
-                android:background="#7C7C7C" />
-
-            <TextView
-                android:id="@+id/tvTap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/vHLine3"
-                android:layout_marginStart="15dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:fontFamily="@font/poppins_light"
-                android:text="Tap 1 tap to buy to complete your purchase"
-                android:textColor="#B3B3B3"
-                android:textSize="12sp"
-                android:textStyle="bold" />
-
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cvTap"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_below="@+id/tvTap"
-                android:layout_marginStart="20dp"
-                android:layout_marginTop="15dp"
-                android:layout_marginEnd="20dp"
-                android:layout_marginBottom="20dp"
-                android:backgroundTint="#499C1E"
-                android:elevation="5dp"
-                app:cardCornerRadius="24dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/vHLine1"
-                    android:layout_gravity="center"
-                    android:layout_marginStart="20dp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginEnd="15dp"
-                    android:layout_marginBottom="15dp"
-                    android:fontFamily="@font/poppins_light"
-                    android:text="Tap 1 tap to buy"
-                    android:textColor="@color/white"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-            </androidx.cardview.widget.CardView>
+                android:text="30 Minutes WIFI access"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </RelativeLayout>
-    </androidx.core.widget.NestedScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvR10"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvR5"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="#54b062"
+        app:cardCornerRadius="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rlR10"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivWifi1"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/wifi" />
+
+            <TextView
+                android:id="@+id/tvR10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivWifi1"
+                android:fontFamily="@font/archivo_black"
+                android:text="@string/r"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvR10"
+                android:fontFamily="@font/archivo_black"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv10D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv10"
+                android:fontFamily="@font/archivo_black"
+                android:gravity="center"
+                android:text="1 hour WIFI access"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvR15"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvR10"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="#54b062"
+        app:cardCornerRadius="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rlR15"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivWifi2"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/wifi" />
+
+            <TextView
+                android:id="@+id/tvR15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivWifi2"
+                android:fontFamily="@font/archivo_black"
+                android:text="@string/r"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv15"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvR15"
+                android:fontFamily="@font/archivo_black"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv15D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv15"
+                android:fontFamily="@font/archivo_black"
+                android:gravity="center"
+                android:text="2 hour WIFI access"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvR20"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvR15"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="#54b062"
+        app:cardCornerRadius="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rlR20"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivWifi3"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/wifi" />
+
+            <TextView
+                android:id="@+id/tvR20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivWifi3"
+                android:fontFamily="@font/archivo_black"
+                android:text="@string/r"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv20"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvR20"
+                android:fontFamily="@font/archivo_black"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv20D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv20"
+                android:fontFamily="@font/archivo_black"
+                android:gravity="center"
+                android:text="3 hour WIFI access"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+
+    <LinearLayout
+        android:id="@+id/llWhatsapp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvR20"
+        android:layout_alignParentBottom="true"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvWhatsapp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/archivo_black"
+            android:gravity="center"
+            android:text="@string/need_help_contact_us"
+            android:textColorLink="#54b062"
+            android:textSize="16sp" />
+
+        <ImageView
+            android:id="@+id/ivWhatsapp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:contentDescription="@string/whatsapp_logo"
+            android:src="@drawable/whatsapp" />
+    </LinearLayout>
+</RelativeLayout>
+

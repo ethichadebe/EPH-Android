@@ -33,11 +33,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private CardView cvTap;
-
-    private BottomSheetBehavior behavior;
-    private View bottomSheet;
-    String[] passwords = {
+    private String[] passwords = {
             "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644", "EPN842792838",
             "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566", "EPN477967961", "EPN613878129",
             "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746", "EPN454412098", "EPN536750292", "EPN585862119",
@@ -54,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
     private RelativeLayout rlR5, rlR10, rlR15, rlR20;
 
-    TextView tvPassword, tvCopy, tvWhatsapp;
+    private TextView tvPassword, tvCopy, tvWhatsapp;
     private MutableLiveData<Boolean> isBillingClientConnected;
     private IapConnector iapConnector;
 
@@ -67,14 +63,10 @@ public class MainActivity extends AppCompatActivity {
         rlR10 = findViewById(R.id.rlR10);
         rlR15 = findViewById(R.id.rlR15);
         rlR20 = findViewById(R.id.rlR20);
+
         tvPassword = findViewById(R.id.tvPassword);
         tvCopy = findViewById(R.id.tvCopy);
         tvWhatsapp = findViewById(R.id.tvWhatsapp);
-        cvTap = findViewById(R.id.cvTap);
-
-        bottomSheet = findViewById(R.id.nsvGoogleBilling);
-        behavior = BottomSheetBehavior.from(bottomSheet);
-
 
         tvPassword.setText(getSavedPassword());
 
@@ -90,26 +82,6 @@ public class MainActivity extends AppCompatActivity {
 
         });
 
-        cvTap.setOnClickListener(v -> {
-            String strPassword = passwords[randomToken(passwords.length - 1)];
-            tvPassword.setText(strPassword);
-
-            tvCopy.setVisibility(View.VISIBLE);
-            // Storing data into SharedPreferences
-            SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
-            // Creating an Editor object to edit(write to the file)
-            SharedPreferences.Editor myEdit = sharedPreferences.edit();
-
-            // Storing the key and its value as the data fetched from edittext
-            myEdit.putString("password", strPassword);
-
-            // Once the changes have been made, we need to commit to apply those changes made,
-            // otherwise, it will throw an error
-            myEdit.commit();
-
-            behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
-        });
-
         tvPassword.setOnClickListener(v -> {
             if (!tvPassword.getText().toString().isEmpty()) {
                 ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
@@ -118,10 +90,6 @@ public class MainActivity extends AppCompatActivity {
                 clipboard.setPrimaryClip(clip);
             }
         });
-
-        behavior.setHideable(true);
-
-        behavior.setState(BottomSheetBehavior.STATE_HIDDEN);
 
         isBillingClientConnected = new MutableLiveData<>();
         isBillingClientConnected.setValue(false);
@@ -179,30 +147,19 @@ public class MainActivity extends AppCompatActivity {
 
         rlR5.setOnClickListener(v -> {
             iapConnector.purchase(this, "r5", "", "");
-            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR10.setOnClickListener(v -> {
             iapConnector.purchase(this, "r10", "", "");
-            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR15.setOnClickListener(v -> {
             iapConnector.purchase(this, "r15", "", "");
-            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
 
         rlR20.setOnClickListener(v -> {
             iapConnector.purchase(this, "r20", "", "");
-            //behavior.setState(BottomSheetBehavior.STATE_EXPANDED);
         });
-    }
-
-    String getMacAddr() {
-        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-        WifiInfo wInfo = wifiManager.getConnectionInfo();
-        String macAddress = wInfo.getMacAddress();
-        return "MAC Address : " + macAddress;
     }
 
     int randomToken(int limit) {
