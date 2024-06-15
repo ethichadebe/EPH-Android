@@ -4,8 +4,6 @@ import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.net.wifi.WifiInfo;
-import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
 import android.util.Log;
@@ -17,10 +15,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.cardview.widget.CardView;
 import androidx.lifecycle.MutableLiveData;
 
-import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.limurse.iap.DataWrappers;
 import com.limurse.iap.IapConnector;
 import com.limurse.iap.PurchaseServiceListener;
@@ -33,24 +29,26 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    private String[] passwords = {
-            "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644", "EPN842792838",
-            "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566", "EPN477967961", "EPN613878129",
-            "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746", "EPN454412098", "EPN536750292", "EPN585862119",
-            "EPN258896921", "EPN840523730", "EPN280789646", "EPN530165851", "EPN376480318", "EPN501204366", "EPN704014156", "EPN255311284",
-            "EPN272398822", "EPN492622514", "EPN619897598", "EPN679948666", "EPN387746860", "EPN625671502", "EPN646865113", "EPN200054015",
-            "EPN676098874", "EPN272795616", "EPN319139410", "EPN309329896", "EPN465283711", "EPN254053891", "EPN744573854", "EPN405370673",
-            "EPN508480826", "EPN127123267", "EPN886106139", "EPN662564931", "EPN878238455", "EPN338738097", "EPN203619381", "EPN365098229",
-            "EPN484322384", "EPN221531429", "EPN315392287", "EPN691911597", "EPN271908649", "EPN181253894", "EPN106346465", "EPN497612517",
-            "EPN872339194", "EPN432903371", "EPN178363002", "EPN419619324", "EPN472978149", "EPN583423696", "EPN774574167", "EPN612461548",
-            "EPN305315449", "EPN579467006", "EPN671871205", "EPN892423803", "EPN710801992", "EPN601326364", "EPN176222205", "EPN477756110",
-            "EPN651981089", "EPN764201128", "EPN593712976", "EPN232396802", "EPN717860265", "EPN353803871", "EPN120997581", "EPN119894200",
-            "EPN320511567", "EPN842117419", "EPN341589105", "EPN312169088", "EPN151964251", "EPN252405253", "EPN162502357", "EPN115197953"
+    String[] passwords = {
+            "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644",
+            "EPN842792838", "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566",
+            "EPN477967961", "EPN613878129", "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746",
+            "EPN454412098", "EPN536750292", "EPN585862119", "EPN258896921", "EPN840523730", "EPN280789646", "EPN530165851",
+            "EPN376480318", "EPN501204366", "EPN704014156", "EPN255311284", "EPN272398822", "EPN492622514", "EPN619897598",
+            "EPN679948666", "EPN387746860", "EPN625671502", "EPN646865113", "EPN200054015", "EPN676098874", "EPN272795616",
+            "EPN319139410", "EPN309329896", "EPN465283711", "EPN254053891", "EPN744573854", "EPN405370673", "EPN508480826",
+            "EPN127123267", "EPN886106139", "EPN662564931", "EPN878238455", "EPN338738097", "EPN203619381", "EPN365098229",
+            "EPN484322384", "EPN221531429", "EPN315392287", "EPN691911597", "EPN271908649", "EPN181253894", "EPN106346465",
+            "EPN497612517", "EPN872339194", "EPN432903371", "EPN178363002", "EPN419619324", "EPN472978149", "EPN583423696",
+            "EPN774574167", "EPN612461548", "EPN305315449", "EPN579467006", "EPN671871205", "EPN892423803", "EPN710801992",
+            "EPN601326364", "EPN176222205", "EPN477756110", "EPN651981089", "EPN764201128", "EPN593712976", "EPN232396802",
+            "EPN717860265", "EPN353803871", "EPN120997581", "EPN119894200", "EPN320511567", "EPN842117419", "EPN341589105",
+            "EPN312169088", "EPN151964251", "EPN252405253", "EPN162502357", "EPN115197953"
     };
 
     private RelativeLayout rlR5, rlR10, rlR15, rlR20;
 
-    private TextView tvPassword, tvCopy, tvWhatsapp;
+    TextView tvPassword, tvCopy, tvWhatsapp;
     private MutableLiveData<Boolean> isBillingClientConnected;
     private IapConnector iapConnector;
 
@@ -95,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
         isBillingClientConnected.setValue(false);
         List<String> nonConsumableList = Collections.singletonList("Lifetime");
         List<String> consumableList = Arrays.asList("r5", "r10", "r15", "r20");
-        List<String> subsList = Collections.singletonList("subscription");
+        List<String> subsList = Collections.singletonList("");
 
         iapConnector = new IapConnector(this, nonConsumableList, consumableList, subsList,
                 "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLAMA9UFcUfb083QzTMBtLuL9zwYZTypVNZ" +
@@ -134,7 +132,9 @@ public class MainActivity extends AppCompatActivity {
                         Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
                         break;
                 }
-                tvPassword.setText(passwords[randomToken(passwords.length - 1)]);
+                String pass = passwords[randomToken(passwords.length - 1)];
+                tvPassword.setText(pass);
+                savePassword(pass);
             }
 
             @Override
@@ -149,21 +149,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-        rlR5.setOnClickListener(v -> {
-            iapConnector.purchase(this, "r5", "", "");
-        });
+        rlR5.setOnClickListener(v -> iapConnector.purchase(this, "r5", null, null));
 
-        rlR10.setOnClickListener(v -> {
-            iapConnector.purchase(this, "r10", "", "");
-        });
+        rlR10.setOnClickListener(v -> iapConnector.purchase(this, "r10", null, null));
 
-        rlR15.setOnClickListener(v -> {
-            iapConnector.purchase(this, "r15", "", "");
-        });
+        rlR15.setOnClickListener(v -> iapConnector.purchase(this, "r15", null, null));
 
-        rlR20.setOnClickListener(v -> {
-            iapConnector.purchase(this, "r20", "", "");
-        });
+        rlR20.setOnClickListener(v -> iapConnector.purchase(this, "r20", null, null));
     }
 
     int randomToken(int limit) {
@@ -188,5 +180,20 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return strPassword;
+    }
+
+    void savePassword(String password) {
+        // Storing data into SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
+
+        // Creating an Editor object to edit(write to the file)
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        // Storing the key and its value as the data fetched from edittext
+        myEdit.putString("password", password);
+
+        // Once the changes have been made, we need to commit to apply those changes made,
+        // otherwise, it will throw an error
+        myEdit.apply();
     }
 }
