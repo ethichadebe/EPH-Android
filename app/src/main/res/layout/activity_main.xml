@@ -17,18 +17,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginEnd="30dp"
         android:layout_marginBottom="30dp"
-        android:contentDescription="TODO"
+        android:contentDescription="@string/logo"
         android:src="@drawable/ep_naledi" />
-
-    <!--<ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="30dp"
-        android:layout_marginEnd="30dp"
-        android:contentDescription="TODO"
-        android:src="@drawable/profile" />-->
 
     <TextView
         android:id="@+id/tvRT"
@@ -45,6 +35,7 @@
         android:id="@+id/llToken"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center_vertical"
         android:layout_below="@+id/tvRT"
         android:orientation="horizontal">
 
@@ -355,6 +346,75 @@
                 android:fontFamily="@font/archivo_black"
                 android:gravity="center"
                 android:text="3 hour WIFI access"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
+
+        </RelativeLayout>
+    </androidx.cardview.widget.CardView>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvR25"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cvR20"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="30dp"
+        android:layout_marginBottom="15dp"
+        app:cardBackgroundColor="#54b062"
+        app:cardCornerRadius="20dp">
+
+        <RelativeLayout
+            android:id="@+id/rlR25"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp">
+
+            <ImageView
+                android:id="@+id/ivWifi4"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:contentDescription="TODO"
+                android:src="@drawable/wifi" />
+
+            <TextView
+                android:id="@+id/tvR25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_toEndOf="@+id/ivWifi4"
+                android:fontFamily="@font/archivo_black"
+                android:text="@string/r"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv25"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="10dp"
+                android:layout_toEndOf="@+id/tvR25"
+                android:fontFamily="@font/archivo_black"
+                android:text="0"
+                android:textColor="@color/white"
+                android:textSize="32sp" />
+
+            <TextView
+                android:id="@+id/tv25D"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_toEndOf="@+id/tv25"
+                android:fontFamily="@font/archivo_black"
+                android:gravity="center"
+                android:text="4 hour WIFI access"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 

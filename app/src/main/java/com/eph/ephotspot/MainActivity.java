@@ -21,6 +21,8 @@ import com.limurse.iap.DataWrappers;
 import com.limurse.iap.IapConnector;
 import com.limurse.iap.PurchaseServiceListener;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +31,7 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
-    String[] passwords = {
+    String[] passwordsR5 = {
             "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644",
             "EPN842792838", "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566",
             "EPN477967961", "EPN613878129", "EPN723139744", "EPN344018891", "EPN200014240", "EPN479766973", "EPN881645746",
@@ -66,7 +68,7 @@ public class MainActivity extends AppCompatActivity {
         tvCopy = findViewById(R.id.tvCopy);
         tvWhatsapp = findViewById(R.id.tvWhatsapp);
 
-        tvPassword.setText(getSavedPassword());
+        //tvPassword.setText(getSavedPassword());
 
         tvWhatsapp.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -92,7 +94,14 @@ public class MainActivity extends AppCompatActivity {
         isBillingClientConnected = new MutableLiveData<>();
         isBillingClientConnected.setValue(false);
         List<String> nonConsumableList = Collections.singletonList("Lifetime");
-        List<String> consumableList = Arrays.asList("r5", "r10", "r15", "r20");
+        List<String> consumableList = Arrays.asList("r5", "r5_0", "r5_1", "r5_2", "r5_3", "r5_4", "r5_5", "r5_6", "r5_7", "r5_8", "r5_9",
+                "r5_10", "r5_11", "r5_12", "r5_13", "r5_14", "r5_15", "r5_16", "r5_17", "r5_18", "r5_19",
+                "r10", "r10_0", "r10_1", "r10_2", "r10_3", "r10_4", "r10_5", "r10_6", "r10_7", "r10_8", "r10_9",
+                "r10_10", "r10_11", "r10_12", "r10_13", "r10_14", "r10_15", "r10_16", "r10_17", "r10_18", "r10_19",
+                "r15", "r15_0", "r15_1", "r15_2", "r15_3", "r15_4", "r15_5", "r15_6", "r15_7", "r15_8", "r15_9",
+                "r15_10", "r15_11", "r15_12", "r15_13", "r15_14", "r15_15", "r15_16", "r15_17", "r15_18", "r15_19",
+                "r20", "r20_0", "r20_1", "r20_2", "r20_3", "r20_4", "r20_5", "r20_6", "r20_7", "r20_8", "r20_9",
+                "r20_10", "r20_11", "r20_12", "r20_13", "r20_14", "r20_15", "r20_16", "r20_17", "r20_18", "r20_19");
         List<String> subsList = Collections.singletonList("");
 
         iapConnector = new IapConnector(this, nonConsumableList, consumableList, subsList,
@@ -108,54 +117,60 @@ public class MainActivity extends AppCompatActivity {
             isBillingClientConnected.setValue(status);
         });
 
+
         iapConnector.addPurchaseListener(new PurchaseServiceListener() {
-            @Override
-            public void onPricesUpdated(@NonNull Map<String, ? extends List<DataWrappers.ProductDetails>> map) {
+            public void onPricesUpdated(@NotNull Map iapKeyPrices) {
 
             }
 
-            @Override
             public void onProductPurchased(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
-                Toast.makeText(MainActivity.this, purchaseInfo.getSku(), Toast.LENGTH_SHORT).show();
-
-                switch (purchaseInfo.getSku()) {
-                    case "r5":
-                        Toast.makeText(MainActivity.this, "Thank you for buying the R5 package", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "r10":
-                        Toast.makeText(MainActivity.this, "Thank you for buying the R10 package", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "r15":
-                        Toast.makeText(MainActivity.this, "Thank you for buying the R15 package", Toast.LENGTH_SHORT).show();
-                        break;
-                    case "r20":
-                        Toast.makeText(MainActivity.this, "Thank you for buying the R20 package", Toast.LENGTH_SHORT).show();
-                        break;
+                if (purchaseInfo.getSku().contains("r5")) {
+                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
+                    tvPassword.setText(getSavedPassword("r5"));
+                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
+                } else if (purchaseInfo.getSku().contains("r10")) {
+                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
+                    tvPassword.setText(getSavedPassword("r5"));
+                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
+                } else if (purchaseInfo.getSku().contains("r15")) {
+                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
+                    tvPassword.setText(getSavedPassword("r5"));
+                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
+                } else if (purchaseInfo.getSku().contains("r20")) {
+                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
+                    tvPassword.setText(getSavedPassword("r5"));
+                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
                 }
-                String pass = passwords[randomToken(passwords.length - 1)];
-                tvPassword.setText(pass);
-                savePassword(pass);
             }
 
-            @Override
             public void onProductRestored(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
 
             }
 
             @Override
-            public void onPurchaseFailed(@Nullable DataWrappers.PurchaseInfo purchaseInfo, @Nullable Integer integer) {
-
+            public void onPurchaseFailed(@Nullable DataWrappers.PurchaseInfo purchaseInfo, @Nullable Integer billingResponseCode) {
+                //Toast.makeText(getApplicationContext(), "Your purchase has been failed", Toast.LENGTH_SHORT).show();
             }
         });
 
+        rlR5.setOnClickListener(v -> {
+            String ID = "r5_" + getSavedProductID("r5");
+            iapConnector.purchase(this, ID, null, null);
+        });
 
-        rlR5.setOnClickListener(v -> iapConnector.purchase(this, "r5", null, null));
+        rlR10.setOnClickListener(v -> {
+            String ID = "r10_" + getSavedProductID("r10");
+            iapConnector.purchase(this, ID, null, null);
+        });
 
-        rlR10.setOnClickListener(v -> iapConnector.purchase(this, "r10", null, null));
+        rlR15.setOnClickListener(v -> {
+            String ID = "r15_" + getSavedProductID("r15");
+            iapConnector.purchase(this, ID, null, null);
+        });
 
-        rlR15.setOnClickListener(v -> iapConnector.purchase(this, "r15", null, null));
-
-        rlR20.setOnClickListener(v -> iapConnector.purchase(this, "r20", null, null));
+        rlR20.setOnClickListener(v -> {
+            iapConnector.purchase(this, "r20", null, null);
+        });
     }
 
     int randomToken(int limit) {
@@ -166,23 +181,37 @@ public class MainActivity extends AppCompatActivity {
         return rand.nextInt(limit);
     }
 
-    private String getSavedPassword() {
+    String getSavedPassword(String passwordType) {
         // Retrieving the value using its keys the file name must be same in both saving and retrieving the data
         SharedPreferences sh = getSharedPreferences("EPNaledi", Context.MODE_PRIVATE);
 
-        String strPassword = sh.getString("password", "");
+        String store = sh.getString(passwordType, "");
 
         // The value will be default as empty string because for the very
         // first time when the app is opened, there is nothing to show
 
-        if (!strPassword.isEmpty()) {
+        if (!store.isEmpty()) {
             tvCopy.setVisibility(View.VISIBLE);
         }
 
-        return strPassword;
+        return store;
     }
 
-    void savePassword(String password) {
+    private int getSavedProductID(String idType) {
+        // Retrieving the value using its keys the file name must be same in both saving and retrieving the data
+        SharedPreferences sh = getSharedPreferences("EPNaledi", Context.MODE_PRIVATE);
+
+        int productID = sh.getInt(idType, 0) + 1;
+
+        Toast.makeText(this, "Product ID: " + productID, Toast.LENGTH_SHORT).show();
+        saveProductID(idType, productID);
+        // The value will be default as empty string because for the very
+        // first time when the app is opened, there is nothing to show
+
+        return productID + 1;
+    }
+
+    void savePassword(String passwordType, String password) {
         // Storing data into SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
 
@@ -190,7 +219,22 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         // Storing the key and its value as the data fetched from edittext
-        myEdit.putString("password", password);
+        myEdit.putString(passwordType, password);
+
+        // Once the changes have been made, we need to commit to apply those changes made,
+        // otherwise, it will throw an error
+        myEdit.apply();
+    }
+
+    private void saveProductID(String idType, int productID) {
+        // Storing data into SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
+
+        // Creating an Editor object to edit(write to the file)
+        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+
+        // Storing the key and its value as the data fetched from edittext
+        myEdit.putInt(idType, productID);
 
         // Once the changes have been made, we need to commit to apply those changes made,
         // otherwise, it will throw an error
