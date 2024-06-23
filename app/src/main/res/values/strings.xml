@@ -7,4 +7,8 @@
     <string name="whatsapp_logo">Whatsapp logo</string>
     <string name="need_help_contact_us">    <a href="https://wa.link/mc0sop">Need help? Contact us</a></string>
     <string name="logo">Logo</string>
+    <string name="your_wifi_password_is">Your WIFI password is:</string>
+    <string name="_30_minutes_wifi_access">30 Minutes WIFI access</string>
+    <string name="_1_hour_wifi_access">1 hour WIFI access</string>
+    <string name="_3_hour_wifi_access">3 hour WIFI access</string>
 </resources>

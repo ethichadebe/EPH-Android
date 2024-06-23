@@ -3,11 +3,8 @@ package com.eph.ephotspot;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
-import android.util.Log;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,20 +14,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.MutableLiveData;
 
-import com.limurse.iap.DataWrappers;
-import com.limurse.iap.IapConnector;
-import com.limurse.iap.PurchaseServiceListener;
+import com.android.billingclient.api.AcknowledgePurchaseParams;
+import com.android.billingclient.api.AcknowledgePurchaseResponseListener;
+import com.android.billingclient.api.BillingClient;
+import com.android.billingclient.api.BillingClientStateListener;
+import com.android.billingclient.api.BillingFlowParams;
+import com.android.billingclient.api.BillingResult;
+import com.android.billingclient.api.ConsumeParams;
+import com.android.billingclient.api.ConsumeResponseListener;
+import com.android.billingclient.api.ProductDetails;
+import com.android.billingclient.api.ProductDetailsResponseListener;
+import com.android.billingclient.api.Purchase;
+import com.android.billingclient.api.PurchasesUpdatedListener;
+import com.android.billingclient.api.QueryProductDetailsParams;
+import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.collect.ImmutableList;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "MainActivity";
     String[] passwordsR5 = {
             "EPN739582893", "EPN272955839", "EPN212469615", "EPN699157113", "EPN845312492", "EPN270634772", "EPN843521644",
             "EPN842792838", "EPN819672195", "EPN455520822", "EPN597315918", "EPN198316355", "EPN337365479", "EPN464147566",
@@ -48,27 +49,60 @@ public class MainActivity extends AppCompatActivity {
             "EPN312169088", "EPN151964251", "EPN252405253", "EPN162502357", "EPN115197953"
     };
 
-    private RelativeLayout rlR5, rlR10, rlR15, rlR20;
-
+    BillingClient billingClient;
     TextView tvPassword, tvCopy, tvWhatsapp;
     private MutableLiveData<Boolean> isBillingClientConnected;
-    private IapConnector iapConnector;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        rlR5 = findViewById(R.id.rlR5);
-        rlR10 = findViewById(R.id.rlR10);
-        rlR15 = findViewById(R.id.rlR15);
-        rlR20 = findViewById(R.id.rlR20);
+        RelativeLayout rlR5 = findViewById(R.id.rlR5);
+        RelativeLayout rlR10 = findViewById(R.id.rlR10);
+        RelativeLayout rlR15 = findViewById(R.id.rlR15);
+        RelativeLayout rlR20 = findViewById(R.id.rlR20);
 
         tvPassword = findViewById(R.id.tvPassword);
         tvCopy = findViewById(R.id.tvCopy);
         tvWhatsapp = findViewById(R.id.tvWhatsapp);
 
-        //tvPassword.setText(getSavedPassword());
+        PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) -> {
+            // To be implemented in a later section.
+            if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) && (purchases != null)) {
+                for (Purchase purchase : purchases) {
+                    handlePurchase(purchase);
+                }
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.BILLING_UNAVAILABLE) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "BILLING_UNAVAILABLE", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_NOT_OWNED) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "ITEM_NOT_OWNED", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.USER_CANCELED) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "USER_CANCELED", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.NETWORK_ERROR) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "NETWORK_ERROR", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.FEATURE_NOT_SUPPORTED) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "FEATURE_NOT_SUPPORTED", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_DISCONNECTED) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "SERVICE_DISCONNECTED", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.DEVELOPER_ERROR) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "DEVELOPER_ERROR", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_ALREADY_OWNED) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "ITEM_ALREADY_OWNED", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.ERROR) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "ERROR", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.ITEM_UNAVAILABLE) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "ITEM_UNAVAILABLE", Toast.LENGTH_SHORT).show();
+            } else if ((billingResult.getResponseCode() == BillingClient.BillingResponseCode.SERVICE_UNAVAILABLE) && (purchases != null)) {
+                Toast.makeText(MainActivity.this, "SERVICE_UNAVAILABLE", Toast.LENGTH_SHORT).show();
+            }
+        };
+
+        billingClient = BillingClient.newBuilder(this)
+                .setListener(purchasesUpdatedListener)
+                .enablePendingPurchases()
+                // Configure other settings.
+                .build();
 
         tvWhatsapp.setMovementMethod(LinkMovementMethod.getInstance());
 
@@ -93,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
 
         isBillingClientConnected = new MutableLiveData<>();
         isBillingClientConnected.setValue(false);
-        List<String> nonConsumableList = Collections.singletonList("Lifetime");
+        /*List<String> nonConsumableList = Collections.singletonList("Lifetime");
         List<String> consumableList = Arrays.asList("r5", "r5_0", "r5_1", "r5_2", "r5_3", "r5_4", "r5_5", "r5_6", "r5_7", "r5_8", "r5_9",
                 "r5_10", "r5_11", "r5_12", "r5_13", "r5_14", "r5_15", "r5_16", "r5_17", "r5_18", "r5_19",
                 "r10", "r10_0", "r10_1", "r10_2", "r10_3", "r10_4", "r10_5", "r10_6", "r10_7", "r10_8", "r10_9",
@@ -102,78 +136,18 @@ public class MainActivity extends AppCompatActivity {
                 "r15_10", "r15_11", "r15_12", "r15_13", "r15_14", "r15_15", "r15_16", "r15_17", "r15_18", "r15_19",
                 "r20", "r20_0", "r20_1", "r20_2", "r20_3", "r20_4", "r20_5", "r20_6", "r20_7", "r20_8", "r20_9",
                 "r20_10", "r20_11", "r20_12", "r20_13", "r20_14", "r20_15", "r20_16", "r20_17", "r20_18", "r20_19");
-        List<String> subsList = Collections.singletonList("");
+        List<String> subsList = Collections.singletonList("");*/
 
-        iapConnector = new IapConnector(this, nonConsumableList, consumableList, subsList,
-                "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLAMA9UFcUfb083QzTMBtLuL9zwYZTypVNZ" +
-                        "6kv6WNGJhs0qeIQYzlFw5Tgf62SyAgZNFhXnmiUHMTMQNMU2a7DROsWJJEqkehqbFxrmYp4x4t4" +
-                        "/yEFMjT193YR4mdJ0ncEp2cg+2YknrWl9ZoHwv5zPfYaU95Bv5Vlgu/7cmzUOi+er9HzsccUyKi3" +
-                        "PDHJRLp6pQAbskPmrYCR+xutbmrmECoc5/T1JOrCkbRMtgSAop5wXqdP8N6gjkaELcOOd5eN5S5IS" +
-                        "7Wt6FE1xq3EGJu22Ibo3Iwk1fexl7Gj+MqwRoNkR+oG2q/r5vHYqcmvWubXxpWMEbtwiTfFV0PIAb9QIDAQAB",
-                true);
+        rlR5.setOnClickListener(v -> buyHotspot("r5"));
 
-        iapConnector.addBillingClientConnectionListener((status, billingResponseCode) -> {
-            Log.d(TAG, "Status: " + status + "\nResponse code: " + billingResponseCode);
-            isBillingClientConnected.setValue(status);
-        });
+        rlR10.setOnClickListener(v -> buyHotspot("r10"));
 
+        rlR15.setOnClickListener(v -> buyHotspot("r15"));
 
-        iapConnector.addPurchaseListener(new PurchaseServiceListener() {
-            public void onPricesUpdated(@NotNull Map iapKeyPrices) {
-
-            }
-
-            public void onProductPurchased(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
-                if (purchaseInfo.getSku().contains("r5")) {
-                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
-                    tvPassword.setText(getSavedPassword("r5"));
-                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().contains("r10")) {
-                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
-                    tvPassword.setText(getSavedPassword("r5"));
-                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().contains("r15")) {
-                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
-                    tvPassword.setText(getSavedPassword("r5"));
-                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
-                } else if (purchaseInfo.getSku().contains("r20")) {
-                    savePassword("r5", passwordsR5[randomToken(passwordsR5.length - 1)]);
-                    tvPassword.setText(getSavedPassword("r5"));
-                    Toast.makeText(MainActivity.this, "30 minutes token bought success", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            public void onProductRestored(@NonNull DataWrappers.PurchaseInfo purchaseInfo) {
-
-            }
-
-            @Override
-            public void onPurchaseFailed(@Nullable DataWrappers.PurchaseInfo purchaseInfo, @Nullable Integer billingResponseCode) {
-                //Toast.makeText(getApplicationContext(), "Your purchase has been failed", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        rlR5.setOnClickListener(v -> {
-            String ID = "r5_" + getSavedProductID("r5");
-            iapConnector.purchase(this, ID, null, null);
-        });
-
-        rlR10.setOnClickListener(v -> {
-            String ID = "r10_" + getSavedProductID("r10");
-            iapConnector.purchase(this, ID, null, null);
-        });
-
-        rlR15.setOnClickListener(v -> {
-            String ID = "r15_" + getSavedProductID("r15");
-            iapConnector.purchase(this, ID, null, null);
-        });
-
-        rlR20.setOnClickListener(v -> {
-            iapConnector.purchase(this, "r20", null, null);
-        });
+        rlR20.setOnClickListener(v -> buyHotspot("r20"));
     }
 
-    int randomToken(int limit) {
+    /*int randomToken(int limit) {
         // create instance of Random class
         Random rand = new Random();
 
@@ -224,9 +198,66 @@ public class MainActivity extends AppCompatActivity {
         // Once the changes have been made, we need to commit to apply those changes made,
         // otherwise, it will throw an error
         myEdit.apply();
+    }*/
+
+    void handlePurchase(Purchase purchase) {
+        ConsumeParams consumeParams =
+                ConsumeParams.newBuilder()
+                        .setPurchaseToken(purchase.getPurchaseToken())
+                        .build();
+
+        ConsumeResponseListener listener = (billingResult, purchaseToken) -> {
+            if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                // Handle the success of the consume operation.
+            }
+        };
+
+        billingClient.consumeAsync(consumeParams, listener);
+
+        //Verify
+        if (purchase.getPurchaseState() == Purchase.PurchaseState.PURCHASED) {
+            //Verify the signature for the purchase
+            if (!verifyValidSignature(purchase.getOriginalJson(), purchase.getSignature())) {
+                Toast.makeText(this, "Error: Invalid purchase", Toast.LENGTH_SHORT).show();
+            }
+
+            //Acknowledge the purchase if not Acknowledged
+            if (!purchase.isAcknowledged()) {
+                AcknowledgePurchaseParams acknowledgePurchaseParams = AcknowledgePurchaseParams.newBuilder()
+                        .setPurchaseToken(purchase.getPurchaseToken())
+                        .build();
+                billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
+
+                tvPassword.setText(passwordsR5[2]);
+                Toast.makeText(this, "Purchased", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
+            }
+        } else if (purchase.getPurchaseState() == Purchase.PurchaseState.UNSPECIFIED_STATE) {
+            Toast.makeText(this, "UNSPECIFIED_STATE", Toast.LENGTH_SHORT).show();
+        } else if (purchase.getPurchaseState() == Purchase.PurchaseState.PENDING) {
+            Toast.makeText(this, "PENDING", Toast.LENGTH_SHORT).show();
+        }
     }
 
-    private void saveProductID(String idType, int productID) {
+    private boolean verifyValidSignature(String originalJson, String signature) {
+        String base64Key = "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLAMA9UFcUfb083QzTMBtLuL9zwYZTypVNZ" +
+                "6kv6WNGJhs0qeIQYzlFw5Tgf62SyAgZNFhXnmiUHMTMQNMU2a7DROsWJJEqkehqbFxrmYp4x4t4" +
+                "/yEFMjT193YR4mdJ0ncEp2cg+2YknrWl9ZoHwv5zPfYaU95Bv5Vlgu/7cmzUOi+er9HzsccUyKi3" +
+                "PDHJRLp6pQAbskPmrYCR+xutbmrmECoc5/T1JOrCkbRMtgSAop5wXqdP8N6gjkaELcOOd5eN5S5IS" +
+                "7Wt6FE1xq3EGJu22Ibo3Iwk1fexl7Gj+MqwRoNkR+oG2q/r5vHYqcmvWubXxpWMEbtwiTfFV0PIAb9QIDAQAB";
+
+        return Verify.verifyPurchase(base64Key, originalJson, signature);
+    }
+
+    AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
+        @Override
+        public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
+            Toast.makeText(MainActivity.this, "Acknowledged", Toast.LENGTH_SHORT).show();
+        }
+    };
+
+    /*private void saveProductID(String idType, int productID) {
         // Storing data into SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
 
@@ -239,5 +270,61 @@ public class MainActivity extends AppCompatActivity {
         // Once the changes have been made, we need to commit to apply those changes made,
         // otherwise, it will throw an error
         myEdit.apply();
+    }*/
+
+    private void buyHotspot(String productId) {
+        billingClient.startConnection(new BillingClientStateListener() {
+            @Override
+            public void onBillingServiceDisconnected() {
+
+            }
+
+            @Override
+            public void onBillingSetupFinished(@NonNull BillingResult billingResult) {
+                if (billingResult.getResponseCode() == BillingClient.BillingResponseCode.OK) {
+                    QueryProductDetailsParams queryProductDetailsParams =
+                            QueryProductDetailsParams.newBuilder()
+                                    .setProductList(
+                                            ImmutableList.of(
+                                                    QueryProductDetailsParams.Product.newBuilder()
+                                                            .setProductId(productId)
+                                                            .setProductType(BillingClient.ProductType.INAPP)
+                                                            .build()))
+                                    .build();
+                    billingClient.queryProductDetailsAsync(
+                            queryProductDetailsParams,
+                            new ProductDetailsResponseListener() {
+                                public void onProductDetailsResponse(@NonNull BillingResult billingResult,
+                                                                     @NonNull List<ProductDetails> productDetailsList) {
+                                    // check billingResult
+                                    // process returned productDetailsList
+
+                                    for (ProductDetails productDetails : productDetailsList) {
+                                        ImmutableList<BillingFlowParams.ProductDetailsParams> productDetailsParamsList =
+                                                ImmutableList.of(
+                                                        BillingFlowParams.ProductDetailsParams.newBuilder()
+                                                                // retrieve a value for "productDetails" by calling queryProductDetailsAsync()
+                                                                .setProductDetails(productDetails)
+                                                                // For one-time products, "setOfferToken" method shouldn't be called.
+                                                                // For subscriptions, to get an offer token, call
+                                                                // ProductDetails.subscriptionOfferDetails() for a list of offers
+                                                                // that are available to the user.
+                                                                .build()
+                                                );
+
+                                        BillingFlowParams billingFlowParams = BillingFlowParams.newBuilder()
+                                                .setProductDetailsParamsList(productDetailsParamsList)
+                                                .build();
+                                        // Launch the billing flow
+                                        billingClient.launchBillingFlow(MainActivity.this, billingFlowParams);
+
+                                    }
+                                }
+                            }
+                    );
+                }
+
+            }
+        });
     }
 }

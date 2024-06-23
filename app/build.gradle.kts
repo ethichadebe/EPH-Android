@@ -10,8 +10,8 @@ android {
         applicationId = "com.eph.ephotspot"
         minSdk = 27
         targetSdk = 34
-        versionCode = 39
-        versionName = "1.4.4"
+        versionCode = 44
+        versionName = "1.4.9"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -40,5 +40,7 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
 
-    implementation("com.github.akshaaatt:Google-IAP:1.6.0")
+    implementation ("com.android.billingclient:billing:7.0.0")
+
+    implementation("com.google.firebase:firebase-crashlytics-buildtools:3.0.2")
 }
