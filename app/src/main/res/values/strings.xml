@@ -11,4 +11,6 @@
     <string name="_30_minutes_wifi_access">30 Minutes WIFI access</string>
     <string name="_1_hour_wifi_access">1 hour WIFI access</string>
     <string name="_3_hour_wifi_access">3 hour WIFI access</string>
+    <string name="wifi_logo">wifi LOGO</string>
+    <string name="_2_hour_wifi_access">2 hour WIFI access</string>
 </resources>

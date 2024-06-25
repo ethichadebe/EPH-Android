@@ -3,8 +3,10 @@ package com.eph.ephotspot;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.method.LinkMovementMethod;
+import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,6 +32,7 @@ import com.android.billingclient.api.QueryProductDetailsParams;
 import com.google.firebase.crashlytics.buildtools.reloc.com.google.common.collect.ImmutableList;
 
 import java.util.List;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     String[] passwordsR5 = {
@@ -51,7 +54,6 @@ public class MainActivity extends AppCompatActivity {
 
     BillingClient billingClient;
     TextView tvPassword, tvCopy, tvWhatsapp;
-    private MutableLiveData<Boolean> isBillingClientConnected;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -66,6 +68,9 @@ public class MainActivity extends AppCompatActivity {
         tvPassword = findViewById(R.id.tvPassword);
         tvCopy = findViewById(R.id.tvCopy);
         tvWhatsapp = findViewById(R.id.tvWhatsapp);
+
+        tvPassword.setText(getSavedPassword());
+
 
         PurchasesUpdatedListener purchasesUpdatedListener = (billingResult, purchases) -> {
             // To be implemented in a later section.
@@ -125,29 +130,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        isBillingClientConnected = new MutableLiveData<>();
+        MutableLiveData<Boolean> isBillingClientConnected = new MutableLiveData<>();
         isBillingClientConnected.setValue(false);
-        /*List<String> nonConsumableList = Collections.singletonList("Lifetime");
-        List<String> consumableList = Arrays.asList("r5", "r5_0", "r5_1", "r5_2", "r5_3", "r5_4", "r5_5", "r5_6", "r5_7", "r5_8", "r5_9",
-                "r5_10", "r5_11", "r5_12", "r5_13", "r5_14", "r5_15", "r5_16", "r5_17", "r5_18", "r5_19",
-                "r10", "r10_0", "r10_1", "r10_2", "r10_3", "r10_4", "r10_5", "r10_6", "r10_7", "r10_8", "r10_9",
-                "r10_10", "r10_11", "r10_12", "r10_13", "r10_14", "r10_15", "r10_16", "r10_17", "r10_18", "r10_19",
-                "r15", "r15_0", "r15_1", "r15_2", "r15_3", "r15_4", "r15_5", "r15_6", "r15_7", "r15_8", "r15_9",
-                "r15_10", "r15_11", "r15_12", "r15_13", "r15_14", "r15_15", "r15_16", "r15_17", "r15_18", "r15_19",
-                "r20", "r20_0", "r20_1", "r20_2", "r20_3", "r20_4", "r20_5", "r20_6", "r20_7", "r20_8", "r20_9",
-                "r20_10", "r20_11", "r20_12", "r20_13", "r20_14", "r20_15", "r20_16", "r20_17", "r20_18", "r20_19");
-        List<String> subsList = Collections.singletonList("");*/
 
-        rlR5.setOnClickListener(v -> buyHotspot("r5"));
+        rlR5.setOnClickListener(v -> buyHotspot("r5_" + getSavedProductID("r5")));
 
-        rlR10.setOnClickListener(v -> buyHotspot("r10"));
+        rlR10.setOnClickListener(v -> buyHotspot("r10_" + getSavedProductID("r10")));
 
-        rlR15.setOnClickListener(v -> buyHotspot("r15"));
+        rlR15.setOnClickListener(v -> buyHotspot("r15_" + getSavedProductID("r15")));
 
-        rlR20.setOnClickListener(v -> buyHotspot("r20"));
+        rlR20.setOnClickListener(v -> buyHotspot("r20_" + getSavedProductID("r20")));
     }
 
-    /*int randomToken(int limit) {
+    int randomToken(int limit) {
         // create instance of Random class
         Random rand = new Random();
 
@@ -155,37 +150,37 @@ public class MainActivity extends AppCompatActivity {
         return rand.nextInt(limit);
     }
 
-    String getSavedPassword(String passwordType) {
+    String getSavedPassword() {
         // Retrieving the value using its keys the file name must be same in both saving and retrieving the data
         SharedPreferences sh = getSharedPreferences("EPNaledi", Context.MODE_PRIVATE);
 
-        String store = sh.getString(passwordType, "");
+        String password = sh.getString("password", "");
 
         // The value will be default as empty string because for the very
         // first time when the app is opened, there is nothing to show
 
-        if (!store.isEmpty()) {
+        if (!password.isEmpty()) {
             tvCopy.setVisibility(View.VISIBLE);
         }
 
-        return store;
+        return password;
     }
 
     private int getSavedProductID(String idType) {
         // Retrieving the value using its keys the file name must be same in both saving and retrieving the data
         SharedPreferences sh = getSharedPreferences("EPNaledi", Context.MODE_PRIVATE);
 
-        int productID = sh.getInt(idType, 0) + 1;
+        int productID = sh.getInt(idType, 0);
 
         Toast.makeText(this, "Product ID: " + productID, Toast.LENGTH_SHORT).show();
-        saveProductID(idType, productID);
+        saveProductID(idType, productID + 1);
         // The value will be default as empty string because for the very
         // first time when the app is opened, there is nothing to show
 
         return productID + 1;
     }
 
-    void savePassword(String passwordType, String password) {
+    void savePassword(String password) {
         // Storing data into SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
 
@@ -193,12 +188,12 @@ public class MainActivity extends AppCompatActivity {
         SharedPreferences.Editor myEdit = sharedPreferences.edit();
 
         // Storing the key and its value as the data fetched from edittext
-        myEdit.putString(passwordType, password);
+        myEdit.putString("password", password);
 
         // Once the changes have been made, we need to commit to apply those changes made,
         // otherwise, it will throw an error
         myEdit.apply();
-    }*/
+    }
 
     void handlePurchase(Purchase purchase) {
         ConsumeParams consumeParams =
@@ -228,7 +223,9 @@ public class MainActivity extends AppCompatActivity {
                         .build();
                 billingClient.acknowledgePurchase(acknowledgePurchaseParams, acknowledgePurchaseResponseListener);
 
-                tvPassword.setText(passwordsR5[2]);
+                String tempPassword = passwordsR5[randomToken(passwordsR5.length - 1)];
+                tvPassword.setText(tempPassword);
+                savePassword(tempPassword);
                 Toast.makeText(this, "Purchased", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Already Purchased", Toast.LENGTH_SHORT).show();
@@ -250,14 +247,9 @@ public class MainActivity extends AppCompatActivity {
         return Verify.verifyPurchase(base64Key, originalJson, signature);
     }
 
-    AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = new AcknowledgePurchaseResponseListener() {
-        @Override
-        public void onAcknowledgePurchaseResponse(@NonNull BillingResult billingResult) {
-            Toast.makeText(MainActivity.this, "Acknowledged", Toast.LENGTH_SHORT).show();
-        }
-    };
+    AcknowledgePurchaseResponseListener acknowledgePurchaseResponseListener = billingResult -> Toast.makeText(MainActivity.this, "Acknowledged", Toast.LENGTH_SHORT).show();
 
-    /*private void saveProductID(String idType, int productID) {
+    private void saveProductID(String idType, int productID) {
         // Storing data into SharedPreferences
         SharedPreferences sharedPreferences = getSharedPreferences("EPNaledi", MODE_PRIVATE);
 
@@ -270,7 +262,7 @@ public class MainActivity extends AppCompatActivity {
         // Once the changes have been made, we need to commit to apply those changes made,
         // otherwise, it will throw an error
         myEdit.apply();
-    }*/
+    }
 
     private void buyHotspot(String productId) {
         billingClient.startConnection(new BillingClientStateListener() {

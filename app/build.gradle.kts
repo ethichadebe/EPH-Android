@@ -10,8 +10,8 @@ android {
         applicationId = "com.eph.ephotspot"
         minSdk = 27
         targetSdk = 34
-        versionCode = 44
-        versionName = "1.4.9"
+        versionCode = 47
+        versionName = "1.5.2"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }

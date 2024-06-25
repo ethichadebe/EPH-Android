@@ -96,7 +96,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/wifi_logo"
                 android:src="@drawable/wifi" />
 
             <TextView
@@ -166,7 +166,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/wifi_logo"
                 android:src="@drawable/wifi" />
 
             <TextView
@@ -236,7 +236,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/wifi_logo"
                 android:src="@drawable/wifi" />
 
             <TextView
@@ -275,7 +275,7 @@
                 android:layout_toEndOf="@+id/tv15"
                 android:fontFamily="@font/archivo_black"
                 android:gravity="center"
-                android:text="2 hour WIFI access"
+                android:text="@string/_2_hour_wifi_access"
                 android:textColor="@color/white"
                 android:textSize="18sp" />
 
@@ -306,7 +306,7 @@
                 android:layout_height="50dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:contentDescription="TODO"
+                android:contentDescription="@string/wifi_logo"
                 android:src="@drawable/wifi" />
 
             <TextView
